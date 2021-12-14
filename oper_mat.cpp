@@ -22,13 +22,19 @@ double** create_mat(int size)
 	return mat;
 }
 
-//записываем значения эл-тов м-цы
-double** input_mat(int& size)
+//записываем значение размерности м-цы
+int input_size()
 {
-	cout << "Введите размер м-цы: ";
+	int size;
 	cin >> size;
 	check_input_int(size);
 
+	return size;
+}
+
+//записываем значения эл-тов м-цы
+double** input_mat(int size)
+{
 	double** mat = create_mat(size);
 
 	for (int i = 0; i < size; i++)
@@ -321,4 +327,58 @@ double** calculator_mat(double** x, int size)
 	clean_mat(additional_mat, size);
 
 	return res;
+}
+
+//вычисление выражения 2A*X-2X=B с выводом промежуточных результатов
+double** calculator_search_x(double** mat_A, double** mat_B, int size)
+{
+	double** identity_mat = create_identity_mat(size); //создаем единичную м-цу
+
+	//E*(-1)
+	cout << "E*(-1):\n";
+	double** mat_2 = create_mat(size);
+	mat_2 = multiply_by_num_mat(identity_mat, size, -1.0);
+	output_mat(mat_2, size);
+
+	//A-1E
+	cout << "A-1E:\n";
+	double** mat_1 = create_identity_mat(size);
+	mat_1 = addition_mat(mat_A, mat_2, size);
+	output_mat(mat_1, size);
+
+	//2(A-1E)
+	cout << "2(A-1E):\n";
+	double** denominator = create_mat(size);
+	denominator = multiply_by_num_mat(mat_1, size, 2.0);
+	output_mat(denominator, size);
+
+	//(2(A-1E))^-1
+	cout << "(2(A-1E))^-1:\n";
+	double det = search_determinant(denominator, size);
+	if (det == 0)
+	{
+		cout << "Определитель равен 0. Решений для обратной м-цы нет или бесконечно много\n";
+		clean_mat(mat_1, size);
+		clean_mat(mat_2, size);
+		clean_mat(denominator, size);
+		clean_mat(identity_mat, size);
+
+		return 0;
+	}
+	double** inverse_mat_denominator = create_mat(size); //создаем обратную м-цу знаменателя
+	inverse_mat_denominator = search_inverse_mat(denominator, size);
+	output_mat(inverse_mat_denominator, size);
+
+	//X = B*((2(A-1E))^-1)
+	cout << "X:\n";
+	double** mat_x = create_mat(size);
+	mat_x = mat_multpy_mat(mat_B, inverse_mat_denominator, size);
+
+	clean_mat(mat_1, size);
+	clean_mat(mat_2, size);
+	clean_mat(denominator, size);
+	clean_mat(identity_mat, size);
+	clean_mat(inverse_mat_denominator, size);
+
+	return mat_x;
 }

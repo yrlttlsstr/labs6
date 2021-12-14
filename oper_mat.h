@@ -4,8 +4,11 @@
 //создает м-цу
 double** create_mat(int size);
 
+//записываем значение размерности м-цы
+int input_size();
+
 //вводим значения эл-тов м-цы
-double** input_mat(int& size);
+double** input_mat(int size);
 
 //выводим м-цу
 void output_mat(double** mat, int size);
@@ -48,6 +51,9 @@ bool comparison_of_mat(double** mat_1, double** mat_2, int size);
 
 //вычисление выражения f(x)=x^3-10x^2+7x-12 с выводом промежуточных результатов
 double** calculator_mat(double** mat, int size);
+
+//вычисление выражения 2A*X-2X=B с выводом промежуточных результатов
+double** calculator_search_x(double** mat_A, double** mat_B, int size);
 
 #endif // _OPER_MAT_H_
 
