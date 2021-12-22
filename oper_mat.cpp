@@ -162,6 +162,7 @@ double** addition_mat(double** mat_1, double** mat_2, int size)
 //получение матрицы без i-й строки и j-го столбца
 double** search_minor_mat(double** mat, int i, int j, int size)
 {
+	double** minor_mat = create_mat(size - 1);
 	int ki, kj, di, dj;
 	di = 0;
 

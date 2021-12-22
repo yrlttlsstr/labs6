@@ -35,7 +35,7 @@ double** multiply_by_num_mat(double** mat_1, int size, double num);
 double** addition_mat(double** mat_1, double** mat_2, int size);
 
 //получение матрицы без i-й строки и j-го столбца
-void search_minor_mat(double** mat, double** minor_mat, int i, int j, int size);
+double** search_minor_mat(double** mat, int i, int j, int size);
 
 //рекурсивное вычисление детерминанта м-цы квадратной
 double search_determinant(double** mat, int size);
