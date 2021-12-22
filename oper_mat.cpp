@@ -11,9 +11,7 @@ double** create_mat(int size)
 	double** mat = new double* [size];
 
 	for (int i = 0; i < size; i++)
-	{
 		mat[i] = new double[size];
-	}
 
 	for (int i = 0; i < size; i++)
 		for (int j = 0; j < size; j++)
@@ -162,7 +160,7 @@ double** addition_mat(double** mat_1, double** mat_2, int size)
 }
 
 //получение матрицы без i-й строки и j-го столбца
-void search_minor_mat(double** mat, double** minor_mat, int i, int j, int size)
+double** search_minor_mat(double** mat, int i, int j, int size)
 {
 	int ki, kj, di, dj;
 	di = 0;
@@ -182,6 +180,8 @@ void search_minor_mat(double** mat, double** minor_mat, int i, int j, int size)
 			minor_mat[ki][kj] = mat[ki + di][kj + dj]; //считаем минор, учитывая сдвиги
 		}
 	}
+
+	return minor_mat;
 }
 
 //рекурсивное вычисление детерминанта (определителя) м-цы квадратной
@@ -189,21 +189,18 @@ double search_determinant(double** mat, int size)
 {
 	double det = 0;
 	int parameter = -1;
-	double** minor_mat = create_mat(size - 1);
 
 	if (size == 1)
-	{
 		det = mat[0][0];
-	}
 	else if (size == 2)
-	{
 		det = mat[0][0] * mat[1][1] - (mat[1][0] * mat[0][1]);
-	}
 	else
 	{
+		double** minor_mat = create_mat(size - 1);
+
 		for (int i = 0; i < size; i++)
 		{
-			search_minor_mat(mat, minor_mat, 0, i, size);
+			minor_mat = search_minor_mat(mat, 0, i, size);
 			parameter *= -1;
 			det += mat[0][i] * parameter * search_determinant(minor_mat, size - 1);
 		}
@@ -223,6 +220,13 @@ double** search_inverse_mat(double** mat, int size)
 	}
 
 	double** inverse_mat = create_mat(size);
+
+	if (size == 1)
+	{
+		inverse_mat[0][0] = 1 / mat[0][0];
+		return inverse_mat;
+	}
+
 	double** minor_mat = create_mat(size - 1);
 	int parameter;
 
@@ -234,7 +238,7 @@ double** search_inverse_mat(double** mat, int size)
 			else
 				parameter = -1;
 
-			search_minor_mat(mat, minor_mat, j, i, size);
+			minor_mat = search_minor_mat(mat, j, i, size);
 
 			inverse_mat[i][j] = (1 / det) * parameter * search_determinant(minor_mat, size - 1);
 			if (abs(inverse_mat[i][j]) < 0.00001) //против -0
@@ -251,10 +255,7 @@ double** search_transp_mat(double** mat, int size)
 
 	for (int i = 0; i < size; i++)
 		for (int j = 0; j < size; j++)
-		{
 			transp_mat[i][j] = mat[j][i];
-			cout << transp_mat[i][j] << " ";
-		}
 
 	return transp_mat;
 }
@@ -369,10 +370,10 @@ double** calculator_search_x(double** mat_A, double** mat_B, int size)
 	inverse_mat_denominator = search_inverse_mat(denominator, size);
 	output_mat(inverse_mat_denominator, size);
 
-	//X = B*((2(A-1E))^-1)
+	//X = ((2(A-1E))^-1)*B
 	cout << "X:\n";
 	double** mat_x = create_mat(size);
-	mat_x = mat_multpy_mat(mat_B, inverse_mat_denominator, size);
+	mat_x = mat_multpy_mat(inverse_mat_denominator, mat_B, size);
 
 	clean_mat(mat_1, size);
 	clean_mat(mat_2, size);
