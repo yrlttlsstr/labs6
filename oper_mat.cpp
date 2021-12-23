@@ -162,6 +162,7 @@ double** addition_mat(double** mat_1, double** mat_2, int size)
 //получение матрицы без i-й строки и j-го столбца
 double** search_minor_mat(double** mat, int i, int j, int size)
 {
+	double** minor_mat = create_mat(size - 1);
 	int ki, kj, di, dj;
 	di = 0;
 
@@ -209,14 +210,14 @@ double search_determinant(double** mat, int size)
 	return det;
 }
 
-//вычисление обратной м-цы квадратной
+//вычисление обратной м-цы квадратной (если невозможно вычислить, то возвращаетс€ исходна€ матрица)
 double** search_inverse_mat(double** mat, int size)
 {
 	double det = search_determinant(mat, size);
 	if (det == 0)
 	{
 		cout << "\nќпределитель равен 0. –ешений дл€ обратной м-цы нет или бесконечно много";
-		return 0;
+		return mat;
 	}
 
 	double** inverse_mat = create_mat(size);
@@ -361,10 +362,9 @@ double** calculator_search_x(double** mat_A, double** mat_B, int size)
 		cout << "ќпределитель равен 0. –ешений дл€ обратной м-цы нет или бесконечно много\n";
 		clean_mat(mat_1, size);
 		clean_mat(mat_2, size);
-		clean_mat(denominator, size);
 		clean_mat(identity_mat, size);
 
-		return 0;
+		return denominator;
 	}
 	double** inverse_mat_denominator = create_mat(size); //создаем обратную м-цу знаменател€
 	inverse_mat_denominator = search_inverse_mat(denominator, size);

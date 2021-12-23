@@ -36,16 +36,11 @@ int main()
 	output_mat(mat_B, size);
 
 	double** mat_x = create_mat(size);
+
 	//вычисление выражения 2A*X-2X=B с выводом промежуточных результатов
 	mat_x = calculator_search_x(mat_A, mat_B, size);
-	if (mat_x != 0)
-	{
-		output_mat(mat_x, size);
-		clean_mat(mat_x, size);
-	}
-	else
-		//если решение решить невозможно, то удаляем mat_x
-		delete[] mat_x;
+	output_mat(mat_x, size);
+	clean_mat(mat_x, size);
 
 	clean_mat(mat_A, size);
 	clean_mat(mat_B, size);
