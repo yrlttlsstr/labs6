@@ -19,14 +19,14 @@ double check_input_double(double& num)
 }
 
 //проверка корректности данных типа int
-int check_input_int(int& num)
+int check_input_int(double& num)
 {
-	while (cin.fail() or (num <= 0))
+	while (cin.fail() or (num <= 0)or(num!=(int)num))
 	{
 		cin.clear();
 		cin.ignore(32767, '\n');
 		cout << "¬ведите корректные данные" << endl;
 		cin >> num;
 	}
-	return num;
+	return (int)num;
 }

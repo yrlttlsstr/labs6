@@ -1,11 +1,11 @@
-#include <iostream>
+п»ї#include <iostream>
 #include <iomanip>
 #include "oper_mat.h"
 #include "check_input.h"
 
 using namespace std;
 
-//создает м-цу
+//СЃРѕР·РґР°РµС‚ Рј-С†Сѓ
 double** create_mat(int size)
 {
 	double** mat = new double* [size];
@@ -20,17 +20,17 @@ double** create_mat(int size)
 	return mat;
 }
 
-//записываем значение размерности м-цы
+//Р·Р°РїРёСЃС‹РІР°РµРј Р·РЅР°С‡РµРЅРёРµ СЂР°Р·РјРµСЂРЅРѕСЃС‚Рё Рј-С†С‹
 int input_size()
 {
-	int size;
+	double size;
 	cin >> size;
-	check_input_int(size);
+	int isize = check_input_int(size);
 
-	return size;
+	return isize;
 }
 
-//записываем значения эл-тов м-цы
+//Р·Р°РїРёСЃС‹РІР°РµРј Р·РЅР°С‡РµРЅРёСЏ СЌР»-С‚РѕРІ Рј-С†С‹
 double** input_mat(int size)
 {
 	double** mat = create_mat(size);
@@ -38,7 +38,6 @@ double** input_mat(int size)
 	for (int i = 0; i < size; i++)
 		for (int j = 0; j < size; j++)
 		{
-			cout << "Введите эл-т м-цы c номером [" << i << "][" << j << "]: ";
 			cin >> mat[i][j];
 			check_input_double(mat[i][j]);
 		}
@@ -46,7 +45,7 @@ double** input_mat(int size)
 	return mat;
 }
 
-//выводим м-цу
+//РІС‹РІРѕРґРёРј Рј-С†Сѓ
 void output_mat(double** mat, int size)
 {
 	cout << "\n";
@@ -59,7 +58,7 @@ void output_mat(double** mat, int size)
 	}
 }
 
-//очистка и удаление м-цы
+//РѕС‡РёСЃС‚РєР° Рё СѓРґР°Р»РµРЅРёРµ Рј-С†С‹
 void clean_mat(double** mat, int size)
 {
 	for (int i = 0; i < size; i++)
@@ -72,7 +71,7 @@ void clean_mat(double** mat, int size)
 	delete[] mat;
 }
 
-//копирование одной м-цы во вторую
+//РєРѕРїРёСЂРѕРІР°РЅРёРµ РѕРґРЅРѕР№ Рј-С†С‹ РІРѕ РІС‚РѕСЂСѓСЋ
 void copy_mat(double** mat_from, double** mat_to, int size)
 {
 	for (int i = 0; i < size; i++)
@@ -80,7 +79,7 @@ void copy_mat(double** mat_from, double** mat_to, int size)
 			mat_to[i][j] = mat_from[i][j];
 }
 
-//операция возведения в степень
+//РѕРїРµСЂР°С†РёСЏ РІРѕР·РІРµРґРµРЅРёСЏ РІ СЃС‚РµРїРµРЅСЊ
 double** power_mat(double** mat_1, int size, int power)
 {
 	double** mat_2 = create_mat(size);
@@ -89,7 +88,7 @@ double** power_mat(double** mat_1, int size, int power)
 	for (int i = 0; i < (power - 1); i++)
 	{
 		double** res_mat = create_mat(size);
-
+		//С„Р°РєС‚РёС‡РµСЃРєРё РїСЂРѕСЃС‚Рѕ СѓРјРЅРѕР¶Р°РµРј РјР°С‚СЂРёС†Сѓ СЃР°РјСѓ РЅР° СЃРµР±СЏ power СЂР°Р·
 		for (int j = 0; j < size; j++)
 			for (int h = 0; h < size; h++)
 				for (int k = 0; k < size; k++)
@@ -102,7 +101,7 @@ double** power_mat(double** mat_1, int size, int power)
 	return mat_2;
 }
 
-//операция умножения м-цы на м-цу
+//РѕРїРµСЂР°С†РёСЏ СѓРјРЅРѕР¶РµРЅРёСЏ Рј-С†С‹ РЅР° Рј-С†Сѓ
 double** mat_multpy_mat(double** mat_1, double** mat_2, int size)
 {
 	double** res_mat = create_mat(size);
@@ -115,7 +114,7 @@ double** mat_multpy_mat(double** mat_1, double** mat_2, int size)
 	return res_mat;
 }
 
-//создание единичной м-цы
+//СЃРѕР·РґР°РЅРёРµ РµРґРёРЅРёС‡РЅРѕР№ Рј-С†С‹
 double** create_identity_mat(int size)
 {
 	double** identity_mat = create_mat(size);
@@ -130,24 +129,24 @@ double** create_identity_mat(int size)
 	return identity_mat;
 }
 
-//операция умножения м-цы на число
+//РѕРїРµСЂР°С†РёСЏ СѓРјРЅРѕР¶РµРЅРёСЏ Рј-С†С‹ РЅР° С‡РёСЃР»Рѕ
 double** multiply_by_num_mat(double** mat_1, int size, double num)
 {
 	double** res_mat = create_mat(size);
 
 	for (int i = 0; i < size; i++)
-		for (int j = 0; j < size; j++) 
+		for (int j = 0; j < size; j++)
 		{
 			res_mat[i][j] = mat_1[i][j] * num;
 
-			if (abs(res_mat[i][j]) < 0.00001) //против -0
+			if (abs(res_mat[i][j]) < 0.00001) //РїСЂРѕС‚РёРІ -0
 				res_mat[i][j] = 0;
 		}
 
 	return res_mat;
 }
 
-//операция сложения(вычитания, если сначала домножить м-цу на -1)
+//РѕРїРµСЂР°С†РёСЏ СЃР»РѕР¶РµРЅРёСЏ(РІС‹С‡РёС‚Р°РЅРёСЏ, РµСЃР»Рё СЃРЅР°С‡Р°Р»Р° РґРѕРјРЅРѕР¶РёС‚СЊ Рј-С†Сѓ РЅР° -1)
 double** addition_mat(double** mat_1, double** mat_2, int size)
 {
 	double** res_mat = create_mat(size);
@@ -159,33 +158,33 @@ double** addition_mat(double** mat_1, double** mat_2, int size)
 	return res_mat;
 }
 
-//получение матрицы без i-й строки и j-го столбца
+//РїРѕР»СѓС‡РµРЅРёРµ РјР°С‚СЂРёС†С‹ Р±РµР· i-Р№ СЃС‚СЂРѕРєРё Рё j-РіРѕ СЃС‚РѕР»Р±С†Р°(РјРёРЅРѕСЂРЅРѕР№)
 double** search_minor_mat(double** mat, int i, int j, int size)
 {
 	double** minor_mat = create_mat(size - 1);
 	int ki, kj, di, dj;
 	di = 0;
 
-	for (ki = 0; ki < size - 1; ki++) // проверка индекса строки
+	for (ki = 0; ki < size - 1; ki++) // РїСЂРѕРІРµСЂРєР° РёРЅРґРµРєСЃР° СЃС‚СЂРѕРєРё
 	{
-		if (ki == i) //если совпало, сдвигаем на 1 строку
+		if (ki == i) //РµСЃР»Рё СЃРѕРІРїР°Р»Рѕ, СЃРґРІРёРіР°РµРј РЅР° 1 СЃС‚СЂРѕРєСѓ
 			di = 1;
 
 		dj = 0;
 
-		for (kj = 0; kj < size - 1; kj++) // проверка индекса столбца
+		for (kj = 0; kj < size - 1; kj++) // РїСЂРѕРІРµСЂРєР° РёРЅРґРµРєСЃР° СЃС‚РѕР»Р±С†Р°
 		{
-			if (kj == j) //если совпало, сдвигаем на 1 столбец
+			if (kj == j) //РµСЃР»Рё СЃРѕРІРїР°Р»Рѕ, СЃРґРІРёРіР°РµРј РЅР° 1 СЃС‚РѕР»Р±РµС†
 				dj = 1;
 
-			minor_mat[ki][kj] = mat[ki + di][kj + dj]; //считаем минор, учитывая сдвиги
+			minor_mat[ki][kj] = mat[ki + di][kj + dj]; //СЃС‡РёС‚Р°РµРј РјРёРЅРѕСЂ, СѓС‡РёС‚С‹РІР°СЏ СЃРґРІРёРіРё
 		}
 	}
 
 	return minor_mat;
 }
 
-//рекурсивное вычисление детерминанта (определителя) м-цы квадратной
+//СЂРµРєСѓСЂСЃРёРІРЅРѕРµ РІС‹С‡РёСЃР»РµРЅРёРµ РґРµС‚РµСЂРјРёРЅР°РЅС‚Р° (РѕРїСЂРµРґРµР»РёС‚РµР»СЏ) Рј-С†С‹ РєРІР°РґСЂР°С‚РЅРѕР№
 double search_determinant(double** mat, int size)
 {
 	double det = 0;
@@ -210,18 +209,18 @@ double search_determinant(double** mat, int size)
 	return det;
 }
 
-//вычисление обратной м-цы квадратной (если невозможно вычислить, то возвращается исходная матрица)
+//РІС‹С‡РёСЃР»РµРЅРёРµ РѕР±СЂР°С‚РЅРѕР№ Рј-С†С‹ РєРІР°РґСЂР°С‚РЅРѕР№ (РµСЃР»Рё РЅРµРІРѕР·РјРѕР¶РЅРѕ РІС‹С‡РёСЃР»РёС‚СЊ, С‚Рѕ РІРѕР·РІСЂР°С‰Р°РµС‚СЃСЏ РёСЃС…РѕРґРЅР°СЏ РјР°С‚СЂРёС†Р°)
 double** search_inverse_mat(double** mat, int size)
-{
+{   //РїСЂРѕРІРµРєСЂРєР° РѕРїСЂРµРґРµР»РёС‚РµР»СЏ РЅР° 0
 	double det = search_determinant(mat, size);
 	if (det == 0)
 	{
-		cout << "\nОпределитель равен 0. Решений для обратной м-цы нет или бесконечно много";
+		cout << "\nРћРїСЂРµРґРµР»РёС‚РµР»СЊ СЂР°РІРµРЅ 0. Р РµС€РµРЅРёР№ РґР»СЏ РѕР±СЂР°С‚РЅРѕР№ Рј-С†С‹ РЅРµС‚ РёР»Рё Р±РµСЃРєРѕРЅРµС‡РЅРѕ РјРЅРѕРіРѕ";
 		return mat;
 	}
 
 	double** inverse_mat = create_mat(size);
-
+	//РЅРµР»СЊР·СЏ РІР·СЏС‚СЊ РјРёРЅРѕСЂ Сѓ РјР°С‚СЂРёС†С‹ 1С…1
 	if (size == 1)
 	{
 		inverse_mat[0][0] = 1 / mat[0][0];
@@ -242,14 +241,14 @@ double** search_inverse_mat(double** mat, int size)
 			minor_mat = search_minor_mat(mat, j, i, size);
 
 			inverse_mat[i][j] = (1 / det) * parameter * search_determinant(minor_mat, size - 1);
-			if (abs(inverse_mat[i][j]) < 0.00001) //против -0
+			if (abs(inverse_mat[i][j]) < 0.00001)
 				inverse_mat[i][j] = 0;
 		}
 
 	return inverse_mat;
 }
 
-//вычисление транспонированной м-цы квадратной
+//РІС‹С‡РёСЃР»РµРЅРёРµ С‚СЂР°РЅСЃРїРѕРЅРёСЂРѕРІР°РЅРЅРѕР№ Рј-С†С‹ РєРІР°РґСЂР°С‚РЅРѕР№
 double** search_transp_mat(double** mat, int size)
 {
 	double** transp_mat = create_mat(size);
@@ -261,7 +260,7 @@ double** search_transp_mat(double** mat, int size)
 	return transp_mat;
 }
 
-//сравние м-ц (поэлемнтно)
+//СЃСЂР°РІРЅРёРµ РЅР° СЂР°РІРµРЅСЃС‚РІРѕ Рј-С† (РїРѕСЌР»РµРјРЅС‚РЅРѕ)
 bool comparison_of_mat(double** mat_1, double** mat_2, int size)
 {
 	for (int i = 0; i < size; i++)
@@ -272,15 +271,16 @@ bool comparison_of_mat(double** mat_1, double** mat_2, int size)
 	return true;
 }
 
-//вычисление выражения f(x)=x^3-10x^2+7x-12 с выводом промежуточных результатов
+//РІС‹С‡РёСЃР»РµРЅРёРµ РІС‹СЂР°Р¶РµРЅРёСЏ f(x)=x^3-10x^2+7x-12 СЃ РІС‹РІРѕРґРѕРј РїСЂРѕРјРµР¶СѓС‚РѕС‡РЅС‹С… СЂРµР·СѓР»СЊС‚Р°С‚РѕРІ
 double** calculator_mat(double** x, int size)
 {
-	double** mat_1 = create_mat(size); //создаем переменные для слагаемых выражения
+	double** mat_1 = create_mat(size);//СЃРѕР·РґР°РµРј РїРµСЂРµРјРµРЅРЅС‹Рµ РґР»СЏ СЃР»Р°РіР°РµРјС‹С… РІС‹СЂР°Р¶РµРЅРёСЏ
 	double** mat_2 = create_mat(size);
-	double** additional_mat = create_mat(size); //создаем дополнительную м-цу для преобразований
-	double** res = create_mat(size); //создаем м-цу для результата
-	double** identity_mat = create_identity_mat(size); //создание единичной м-цы
+	double** additional_mat = create_mat(size); //СЃРѕР·РґР°РµРј РґРѕРїРѕР»РЅРёС‚РµР»СЊРЅСѓСЋ Рј-С†Сѓ РґР»СЏ РїСЂРµРѕР±СЂР°Р·РѕРІР°РЅРёР№
+	double** res = create_mat(size); //СЃРѕР·РґР°РµРј Рј-С†Сѓ РґР»СЏ СЂРµР·СѓР»СЊС‚Р°С‚Р°
+	double** identity_mat = create_identity_mat(size); //СЃРѕР·РґР°РЅРёРµ РµРґРёРЅРёС‡РЅРѕР№ Рј-С†С‹
 
+	//РІС‹РїРёСЃС‹РІР°РµРј, С‡С‚Рѕ С…РѕС‚РёРј РЅР°Р№С‚Рё, РЅР°С…РѕРґРёРј, Рё РІС‹РїРёСЃС‹РІР°РµРј СЌС‚Рѕ(С‚Р°Рє РєР°Р¶РґС‹Р№ Р±Р»РѕРє)
 	cout << "\nx^3: ";
 	mat_1 = power_mat(x, size, 3);
 	output_mat(mat_1, size);
@@ -289,6 +289,7 @@ double** calculator_mat(double** x, int size)
 	mat_2 = power_mat(x, size, 2);
 	output_mat(mat_2, size);
 
+	//РєРѕРјРµРЅС‚ СЃРµР±Рµ|| РјРѕР¶РЅРѕ Р»Рё СЃРґРµР»Р°С‚СЊ РѕРїРµСЂР°С†РёСЋ РЅРёР¶Рµ Р±РµР· РєРѕРїРёСЂРѕРІР°РЅРёСЏ? РІРµРґСЊ С„СѓРЅРєС†РёСЏ Р±РµСЂРµС‚ additional_mat РЅРµ РїРѕ СЃСЃС‹Р»РєРµ
 	cout << "\n(x^2)*(-10): ";
 	copy_mat(mat_2, additional_mat, size);
 	clean_mat(mat_2, size);
@@ -331,10 +332,10 @@ double** calculator_mat(double** x, int size)
 	return res;
 }
 
-//вычисление выражения 2A*X-2X=B с выводом промежуточных результатов
-double** calculator_search_x(double** mat_A, double** mat_B, int size)
+//РІС‹С‡РёСЃР»РµРЅРёРµ X РёР· СѓСЂР°РІРЅРµРЅРёСЏ 2A*X-2X=B СЃ РІС‹РІРѕРґРѕРј РїСЂРѕРјРµР¶СѓС‚РѕС‡РЅС‹С… СЂРµР·СѓР»СЊС‚Р°С‚РѕРІ
+double** calculator_search_x(double** mat_A, double** mat_B, int size, double &flag_det)
 {
-	double** identity_mat = create_identity_mat(size); //создаем единичную м-цу
+	double** identity_mat = create_identity_mat(size); //Г±Г®Г§Г¤Г ГҐГ¬ ГҐГ¤ГЁГ­ГЁГ·Г­ГіГѕ Г¬-Г¶Гі
 
 	//E*(-1)
 	cout << "E*(-1):\n";
@@ -357,16 +358,17 @@ double** calculator_search_x(double** mat_A, double** mat_B, int size)
 	//(2(A-1E))^-1
 	cout << "(2(A-1E))^-1:\n";
 	double det = search_determinant(denominator, size);
+	flag_det = det;
+	//РµСЃР»Рё РѕРїСЂРµРґРµР»РёС‚РµР»СЊ РјР°С‚СЂРёС†С‹ 0
 	if (det == 0)
 	{
-		cout << "Определитель равен 0. Решений для обратной м-цы нет или бесконечно много\n";
 		clean_mat(mat_1, size);
 		clean_mat(mat_2, size);
 		clean_mat(identity_mat, size);
 
 		return denominator;
 	}
-	double** inverse_mat_denominator = create_mat(size); //создаем обратную м-цу знаменателя
+	double** inverse_mat_denominator = create_mat(size); //Г±Г®Г§Г¤Г ГҐГ¬ Г®ГЎГ°Г ГІГ­ГіГѕ Г¬-Г¶Гі Г§Г­Г Г¬ГҐГ­Г ГІГҐГ«Гї
 	inverse_mat_denominator = search_inverse_mat(denominator, size);
 	output_mat(inverse_mat_denominator, size);
 
@@ -382,4 +384,75 @@ double** calculator_search_x(double** mat_A, double** mat_B, int size)
 	clean_mat(inverse_mat_denominator, size);
 
 	return mat_x;
+}
+
+
+//РїСЂРѕРІРµСЂРєР° РЅР°, С‚Рѕ С‡С‚Рѕ РјР°С‚СЂРёС†Р° СЃРїРµС†.РѕСЂС‚РѕРіРѕРЅР°Р»СЊРЅР°СЏ
+int check_special_orthogonal_mat(double** mat, int size) {
+
+	double** inverse_mat = create_mat(size);
+	double** transp_mat = create_mat(size);
+	double det;
+
+	det = search_determinant(mat, size);
+	inverse_mat = search_inverse_mat(mat, size);
+	transp_mat = search_transp_mat(mat, size);
+
+	if ((det == 1) && (comparison_of_mat(inverse_mat, transp_mat, size)))
+		return 1;
+	else
+		return 0;
+
+	clean_mat(inverse_mat, size);
+	clean_mat(transp_mat, size);
+	return 0;
+}
+
+//РѕР±РµСЂС‚РєР° РґР»СЏ РЅРѕРІРѕР№ Р»Р°Р±РѕСЂР°С‚РѕСЂРЅРѕР№ 6.4
+void wrapper(double** mat_A, int size_A, double** mat_B, int size_B) {
+	if (size_A != size_B)
+		cout << "РќРµРѕР±С…РѕРґРёРјС‹ РјР°С‚СЂРёС†С‹ РѕРґРёРЅР°РєРѕРІРѕР№ СЂР°Р·РјРµСЂРЅРѕСЃС‚Рё" << endl;
+	else {
+		double** new_mat_A = create_mat(size_A);
+		double** new_mat_B = create_mat(size_A);
+		double** x = create_mat(size_A);
+		double** E = create_mat(size_A);
+		double** E3 = create_mat(size_A);
+		
+		E = create_identity_mat(size_A);//СЃРѕР·РґР°РµРј РµРґРёРЅРёС‡РЅСѓСЋ РјР°С‚СЂРёС†Сѓ
+		E3 = multiply_by_num_mat(E, size_A, 3);// E*3
+		x = addition_mat(mat_A, E3, size_A);//E*3+A
+		new_mat_A = calculator_mat(x, size_A);//РЅР°С…РѕРґРёРј Рђ'
+		output_mat(new_mat_A, size_A);
+		cout << endl;
+
+		x = mat_multpy_mat(mat_B, mat_A, size_A);//B*A
+		new_mat_B = calculator_mat(mat_A, size_A);//РЅР°С…РѕРґРёРј РјР°С‚СЂРёС†Сѓ B'
+		output_mat(new_mat_B, size_A);
+
+		//РїСЂРѕРІРµСЂСЏРµРј, С‡С‚Рѕ РјР°С‚СЂРёС†Р° A' СЃРїРµС†РёР°Р»СЊРЅР°СЏ РѕСЂС‚РѕРіРѕРЅР°Р»СЊРЅР°СЏ
+		int flag2 = check_special_orthogonal_mat(new_mat_A, size_A);
+
+		if (flag2 == 1)
+			cout << "\nР”Р°,СЌС‚Рѕ СЃРїРёС†РёР°Р»СЊРЅР°СЏ РѕСЂС‚РѕРіРѕРЅР°Р»СЊРЅР°СЏ РјР°С‚СЂРёС†Р°";
+		else
+			cout << "\nРќР•Рў,СЌС‚Рѕ РќР• СЃРїРёС†РёР°Р»СЊРЅР°СЏ РѕСЂС‚РѕРіРѕРЅР°Р»СЊРЅР°СЏ РјР°С‚СЂРёС†Р°";
+		cout << endl;
+		
+		//РёС‰РµРј РєРѕСЂРµРЅСЊ РјР°С‚СЂРёС‡РЅРѕРіРѕ СѓСЂР°РІРЅРµРЅРёСЏ
+		double flag_det = 1;
+		x = calculator_search_x(new_mat_A, new_mat_B, size_A, flag_det);
+
+		if(flag_det == 0)
+			cout << "РћРїСЂРµРґРµР»РёС‚РµР»СЊ СЂР°РІРµРЅ 0. Р РµС€РµРЅРёР№ РґР»СЏ РѕР±СЂР°С‚РЅРѕР№ Рј-С†С‹ РЅРµС‚ РёР»Рё Р±РµСЃРєРѕРЅРµС‡РЅРѕ РјРЅРѕРіРѕ\n";
+		else
+	     	output_mat(x, size_A);
+
+		clean_mat(new_mat_A, size_A);
+		clean_mat(new_mat_B, size_B);
+		clean_mat(E, size_A);
+		clean_mat(E3, size_A);
+		clean_mat(x, size_A);
+
+	}
 }

@@ -7,7 +7,7 @@ double** create_mat(int size);
 //записываем значение размерности м-цы
 int input_size();
 
-//вводим значения эл-тов м-цы
+//записываем значения эл-тов м-цы
 double** input_mat(int size);
 
 //выводим м-цу
@@ -37,7 +37,7 @@ double** addition_mat(double** mat_1, double** mat_2, int size);
 //получение матрицы без i-й строки и j-го столбца
 double** search_minor_mat(double** mat, int i, int j, int size);
 
-//рекурсивное вычисление детерминанта м-цы квадратной
+//рекурсивное вычисление детерминанта (определителя) м-цы квадратной
 double search_determinant(double** mat, int size);
 
 //вычисление обратной м-цы квадратной (если невозможно вычислить, то возвращается исходная матрица)
@@ -50,10 +50,14 @@ double** search_transp_mat(double** mat, int size);
 bool comparison_of_mat(double** mat_1, double** mat_2, int size);
 
 //вычисление выражения f(x)=x^3-10x^2+7x-12 с выводом промежуточных результатов
-double** calculator_mat(double** mat, int size);
+double** calculator_mat(double** x, int size);
 
 //вычисление выражения 2A*X-2X=B с выводом промежуточных результатов
-double** calculator_search_x(double** mat_A, double** mat_B, int size);
+double** calculator_search_x(double** mat_A, double** mat_B, int size, double &flag_det);
 
+//проверка на, то что матрица спец.ортогональная
+int check_special_orthogonal_mat(double** mat, int size);
+
+//обертка для новой лабораторной 6.4
+void wrapper(double** mat_A, int size_A, double** mat_B, int size_B);
 #endif // _OPER_MAT_H_
-

@@ -5,7 +5,6 @@
 double check_input_double(double& num);
 
 //проверка корректности данных типа int
-int check_input_int(int& num);
+int check_input_int(double& num);
 
 #endif // _CHECK_INPUT_H_
-
